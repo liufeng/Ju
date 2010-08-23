@@ -1,0 +1,33 @@
+$def with (items)
+
+<html>
+  <head>
+    <title>Current Data Items</title>
+  </head>
+
+  <body>
+    <center>
+      <table align=center width=760>
+        <tr>
+          <td>ID</td>
+          <td>品名</td>
+          <td>时间</td>
+          <td>说明</td>
+          <td>价格</td>
+          <td>地区</td>
+          <td>购买人数</td>
+        </tr>
+        $for item in items:
+        <tr>
+          <td>$item.id</td>
+          <td>$item.title</td>
+          <td>$item.time</td>
+          <td>$item.description</td>
+          <td>￥$item.price</td>
+          <td>$item.area</td>
+          <td>$item.people_num</td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
