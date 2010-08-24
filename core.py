@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import web
-import sqlite3
 
 db = web.database(dbn='sqlite', db='test.db')
 
