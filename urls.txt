@@ -1,0 +1,3 @@
+/              首页
+/product/all   全部商品列表
+/product/(\d+) 单个商品
