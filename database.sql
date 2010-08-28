@@ -29,3 +29,12 @@ CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT, title, time, descriptio
 -- INSERT data
 INSERT INTO item (title, time, description, price, area, people_num)
        VALUES ("女鞋", datetime('now'), "女鞋说明", "30", "济南", 54);
+
+
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+-- comment database
+CREATE TABLE comment (id INTEGER PRIMARY KEY AUTOINCREMENT, item_id INTEGER, username, email NOT NULL, time, content, FOREIGN KEY (item_id) REFERENCES item(id));
+
+INSERT INTO comment (item_id, username, email, time, content) VALUES (?, ?, ?, ?, ?);

@@ -3,7 +3,7 @@
 
 import web
 from web.contrib.template import render_mako
-import os
+from web import form
 
 db = web.database(dbn='sqlite', db='test.db')
 
@@ -32,11 +32,26 @@ class product_all:
         items = db.select('item', order='people_num DESC', limit=20)
         return render.product_all(items=items)
 
+vemail = form.regexp(r".*@.*", "must be a valid email address")
+comment_form = form.Form(
+    form.Textbox('username', description="Username"),
+    form.Textbox('email', vemail, description="Email"),
+    form.Textbox('content', description="Content"),
+    form.Button('submit', type='submit', description="Submit"),
+    validators = [
+        form.Validator("Email must be offered", lambda i: i.email != None)
+        ]
+    )
+
 class product:
     def GET(self,id):
         myvar = dict(id=id)
         item = db.select('item', myvar, where="id=$id")
-        return render.product(item=item[0])
+        return render.product(item=item[0], comment_form=comment_form)
+    
+    def POST(self):
+        f = comment_form()
+        return None
 
 if __name__ == "__main__":
     app.run()
