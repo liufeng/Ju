@@ -34,7 +34,9 @@ class product_all:
 
 class product:
     def GET(self,id):
-        return "Single product, id=%s" % id
+        myvar = dict(id=id)
+        item = db.select('item', myvar, where="id=$id")
+        return render.product(item=item[0])
 
 if __name__ == "__main__":
     app.run()
