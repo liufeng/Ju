@@ -9,7 +9,8 @@ db = web.database(dbn='sqlite', db='test.db')
 
 urls = (
     '/', 'index',
-    '/data', 'data',
+    '/product/all', 'product_all',
+    '/product/(\d+)', 'product',
 )
 
 # render = web.template.render('templates/')
@@ -26,10 +27,14 @@ class index:
     def GET(self):
         return render.index()
 
-class data:
+class product_all:
     def GET(sefl):
         items = db.select('item', order='people_num DESC', limit=20)
-        return render.data(items=items)
+        return render.product_all(items=items)
+
+class product:
+    def GET(self, item_id):
+        return "Single product, id=%s" % item_id
 
 if __name__ == "__main__":
     app.run()
