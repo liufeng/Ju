@@ -3,6 +3,16 @@
 
 import urllib
 import re
+import sqlite3
+
+def add_item(title, price, area, people_num, pic_url, description):
+    conn = sqlite3.connect('../test.db')
+    conn.text_factory = str
+    c = conn.cursor()
+    c.execute('INSERT INTO item (title, time, price, area, people_num, pic_url, description) VALUES (?, datetime(), ?, ?, ?, ?, ?)',\
+                  (title, price, area, people_num, pic_url, description))
+    conn.commit()
+    c.close()
 
 url = 'http://www.lashou.com/'
 # url = 'http://open.client.lashou.com/list/goods/cityid/1591'
@@ -19,17 +29,17 @@ orig_price = re.compile(r'<li>原价<br /><h4 title="(.*?)">', re.DOTALL).findal
 discount = re.compile(r'<li>折扣<br /><h3>(.*?)折</h3></li>', re.DOTALL).findall(htmlSource)[0]
 save = re.compile(r'<li class="red">节省<br /><h3>(.*?)</h3></li>', re.DOTALL).findall(htmlSource)[0]
 people_num = re.compile(r'已经有(.*?)人购买', re.DOTALL).findall(htmlSource)[0]
-pic_url = re.compile(r'''<div class="image">
-						 <img src="(.*?)"
-			  />''', re.DOTALL).findall(htmlSource)[0]
+pic_url = re.compile(r'''<div class="image">\s+<img src="(.*?)"''', re.DOTALL).findall(htmlSource)[0]
 description = re.compile(r'''<h3>本单详情</h3>(.*?)<h3>大家点评：</h3>''', re.DOTALL).findall(htmlSource)[0]
 
 print item_url
 print title.decode('utf-8')
-print price
+print price[3:]
 print orig_price
 print discount
-print save
+print save[3:]
 print people_num
 print pic_url
 print description
+
+add_item(title.decode('utf-8'), price, '济南', people_num, pic_url, description)

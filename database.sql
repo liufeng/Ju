@@ -1,6 +1,6 @@
 -- CREATE the database
    -- We currently use this.
-CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT, title, time, description, price, area, people_num);
+CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT, title, time, description, price, area, people_num, pic_url);
 
 -- CREATE TABLE item (
 --        id          INTEGER PRIMARY KEY,
