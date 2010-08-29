@@ -36,7 +36,7 @@ vemail = form.regexp(r".*@.*", "must be a valid email address")
 comment_form = form.Form(
     form.Textbox('username', description="Username"),
     form.Textbox('email', vemail, description="Email"),
-    form.Textbox('content', description="Content"),
+    form.Textarea('content', description="Content"),
     form.Button('submit', type='submit', description="Submit"),
     validators = [
         form.Validator("Email must be offered", lambda i: i.email != None)
@@ -47,10 +47,19 @@ class product:
     def GET(self,id):
         myvar = dict(id=id)
         item = db.select('item', myvar, where="id=$id")
-        return render.product(item=item[0], comment_form=comment_form)
+        comments = db.select('comment', myvar, where="item_id=$id")
+        return render.product(item=item[0], comments=comments, comment_form=comment_form)
     
-    def POST(self):
+    def POST(self,id):
         f = comment_form()
+        if not f.validates():
+            return "input not valid"
+        else:
+            seq = db.insert('comment', item_id=id, username=f.username.value,\
+                          email=f.email.value, time=web.SQLLiteral("datetime()"),\
+                          content=f.content.value)
+            return "id = %s, Name = %s, Email = %s, Content = %s, seq = %s" % \
+                (id, f.username.value, f.email.value, f.content.value, seq)
         return None
 
 if __name__ == "__main__":

@@ -12,6 +12,14 @@
     <p>地区 = ${item.area}</p>
     <p>购买人数 = ${item.people_num}</p>
 
+    <hr />
+    % for comment in comments:
+    <p>用户名: ${comment.username}</p>
+    <p>Email: ${comment.email}</p>
+    <p>${comment.content}</p>
+    <hr />
+    % endfor
+
     <form method="POST">
       ${comment_form.render()}
     </form>
