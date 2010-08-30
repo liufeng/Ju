@@ -5,7 +5,7 @@ import web
 from web.contrib.template import render_mako
 from web import form
 
-db = web.database(dbn='sqlite', db='test.db')
+db = web.database(dbn='sqlite', db='db/test.db')
 
 urls = (
     '/', 'index',
